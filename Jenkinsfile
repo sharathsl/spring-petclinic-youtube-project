@@ -2,7 +2,8 @@ pipeline {
     agent {label 'linux'}
 
     environment {
-        docker_image="petclinic:${env.BUILD_ID}"
+        docker_image="petclinic"
+        docker_tag="${env.BUILD_ID}"
         source="${WORKSPACE}/Dockerfile"
         destination="/var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/"
         DOCKER_PASSWORD=credentials('DOCKERHUB_CREDS')
@@ -28,19 +29,19 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'cp -p ${source} ${destination}'
-                sh 'cd ${destination}; sudo docker build -t ${docker_image} .'
+                sh 'cd ${destination}; sudo docker build -t ${docker_image}:docker_tag .'
             }
         }
         
         stage('Dockerhub login') {
             steps {
-                sh 'echo $DOCKER_PASSWORD |sudo docker login -u $DOCKER_USERNAME -p --password-stdin'
+                sh 'echo $DOCKER_PASSWORD |sudo docker login -u $DOCKER_USERNAME --password-stdin'
             }
         }
 
         stage('Push docker image') {
             steps {
-                sh 'sudo docker tag ${image_name}:${env.BUILD_ID} ${dockerhub_repo}/${image_name}:${docker_tag}'
+                sh 'sudo docker tag ${image_name}:${docker_tag} ${dockerhub_repo}/${image_name}:${docker_tag}'
                 sh 'sudo docker push ${dockerhub_repo}/${image_name}:${docker_tag}'
             }
         }
