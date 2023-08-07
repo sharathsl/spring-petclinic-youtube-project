@@ -5,6 +5,8 @@ pipeline {
         docker_image="petclinic:${env.BUILD_ID}"
         source="${WORKSPACE}/Dockerfile"
         destination="/var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/"
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub-creds')
+        dockerhub_repo="sharath2787"
     }
     
     stages {
@@ -26,6 +28,18 @@ pipeline {
             steps {
                 sh 'cp -p ${source} ${destination}'
                 sh 'cd ${destination}; sudo docker build -t ${docker_image} .'
+            }
+        }
+        
+        stage('Dockerhub login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
+        stage('Push docker image') {
+            steps {
+                sh 'sudo docker tag ${image_name}:${env.BUILD_ID} ${dockerhub_repo}/${image_name}:${docker_tag}'
             }
         }
     }
