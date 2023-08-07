@@ -5,7 +5,7 @@ pipeline {
         docker_image="petclinic:${env.BUILD_ID}"
         source="${WORKSPACE}/Dockerfile"
         destination="/var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/"
-        DOCKERHUB_CREDENTIALS=credentials('dockerhub-creds')
+        DOCKERHUB_CREDENTIALS=credentials('DOCKERHUB_CREDS')
         dockerhub_repo="sharath2787"
         docker_user="sharath2787"
     }
