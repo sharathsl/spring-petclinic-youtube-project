@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         docker_image="petclinic:${env.BUILD_ID}"
+        source="${WORKSPACE}/Dockerfile"
+        destination="/var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/"
     }
     
     stages {
@@ -22,9 +24,7 @@ pipeline {
 
         stage('Build docker image') {
             steps {
-                sh 'cd /var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/'
-                sh 'cp ${WORKSPACE}/Dockerfile .'
-                sh 'echo ${WORKSPACE}'
+                sh 'cp -p ${source} ${destination}'
                 sh 'docker build -t ${docker_image} -p .'
             }
         }
