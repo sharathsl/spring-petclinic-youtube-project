@@ -41,8 +41,8 @@ pipeline {
 
         stage('Push docker image') {
             steps {
-                sh 'sudo docker tag ${image_name}:${docker_tag} ${dockerhub_repo}/${image_name}:${docker_tag}'
-                sh 'sudo docker push ${dockerhub_repo}/${image_name}:${docker_tag}'
+                sh 'sudo docker tag ${docker_image}:${docker_tag} ${dockerhub_repo}/${docker_image}:${docker_tag}'
+                sh 'sudo docker push ${dockerhub_repo}/${docker_image}:${docker_tag}'
             }
         }
     }
