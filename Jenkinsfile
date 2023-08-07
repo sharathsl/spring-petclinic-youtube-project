@@ -25,7 +25,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'cp -p ${source} ${destination}'
-                sh 'docker build -t ${docker_image} -p .'
+                sh 'docker build -t ${docker_image} .'
             }
         }
     }
