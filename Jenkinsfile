@@ -23,7 +23,8 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'cd /var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/'
-                sh 'cp ${workspace}/first_project/Dockerfile .'
+                sh 'cp ${WORKSPACE}/Dockerfile .'
+                sh 'echo ${WORKSPACE}'
                 sh 'docker build -t ${docker_image} -p .'
             }
         }
