@@ -25,6 +25,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'cp -p ${source} ${destination}'
+                sh 'cd ${destination}'
                 sh 'sudo docker build -t ${docker_image} .'
             }
         }
