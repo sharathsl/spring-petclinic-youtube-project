@@ -7,6 +7,7 @@ pipeline {
         destination="/var/lib/jenkins/.m2/repository/org/springframework/samples/spring-petclinic/3.1.0-SNAPSHOT/"
         DOCKERHUB_CREDENTIALS=credentials('dockerhub-creds')
         dockerhub_repo="sharath2787"
+        docker_user="sharath2787"
     }
     
     stages {
