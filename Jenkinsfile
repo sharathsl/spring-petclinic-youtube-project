@@ -29,7 +29,7 @@ pipeline {
         stage('Build docker image') {
             steps {
                 sh 'cp -p ${source} ${destination}'
-                sh 'cd ${destination}; sudo docker build -t ${docker_image}:docker_tag .'
+                sh 'cd ${destination}; sudo docker build -t ${docker_image}:${docker_tag} .'
             }
         }
         
