@@ -15,4 +15,4 @@ EXPOSE 8080
 
 WORKDIR /home/$user
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=postgres","/app.jar"]
